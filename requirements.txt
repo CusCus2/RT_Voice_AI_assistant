@@ -1,0 +1,5 @@
+speechrecognition 
+ollama 
+pyttsx3 
+pyaudio
+time
