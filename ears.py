@@ -4,22 +4,25 @@ import speech_recognition as sr
 
 def calibrate_microphone() -> None:
     recognizer = sr.Recognizer()
-    MICROPHONE_INDEX = 3
+    MICROPHONE_INDEX = 4
     with sr.Microphone(device_index=MICROPHONE_INDEX) as source:
         print("Calibrating microphone. Please remain silent...")
         recognizer.adjust_for_ambient_noise(source, duration=1)
+        recognizer.pause_threshold = 1
 
     print(f"Energy threshold: {recognizer.energy_threshold}")
+    print(f"Pause thresholdd: {recognizer.pause_threshold}")
+    return recognizer
 
-def listen():
-    recognizer = sr.Recognizer()
-    MICROPHONE_INDEX = 3
+def listen(recognizer : sr.Recognizer):
+    
+    MICROPHONE_INDEX = 4
     try:
         with sr.Microphone(device_index=MICROPHONE_INDEX) as source:
-            audio = recognizer.listen(source, timeout=5, phrase_time_limit=10)
             print("Listening... (Speak now)")
+            audio = recognizer.listen(source, timeout=5, phrase_time_limit=None)
+            print("processing...")
         text = recognizer.recognize_google(audio)
-        print("processing...")
         print(f"You said: {text}")
         return text
     

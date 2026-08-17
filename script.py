@@ -5,13 +5,15 @@ import mouth as mt
 def main():
     print("--- Voice Assistant Started ---")
     print("Calibrating ...")
-    er.calibrate_microphone()
+    recognizer = er.calibrate_microphone()
     mt.speak("Hello, I am ready. You can start speaking.")
 
     while True:
-        user_input = er.listen()
+        print("executing listen")
+        user_input = er.listen(recognizer)
 
         if not user_input:
+            print("nothing heard")
             continue
         
         if user_input.lower().strip() in ["exit", "stop", "quit"]:
